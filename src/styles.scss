@@ -1,0 +1,58 @@
+input[type=file] {
+    display: none;
+}
+
+body {
+    background: #000;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 3rem;
+    max-width: 800px;
+    background: #ccc;
+    border-radius: 3px;
+}
+
+.main__wrap {
+    .btn {
+        position: relative;
+        border-radius: 50px;
+        border: 1px solid #42b983;
+        text-decoration: none;
+        padding: 0.5rem 1.5rem;
+        font-weight: 700;
+        outline: none;
+        background: #fff;
+        color: #000;
+        transform: all .2s ease-out;
+        cursor: pointer;
+        margin-right: 1rem;
+        &.primary {
+            background: #42b983;
+            color: #fff;
+        }
+        &:active {
+            box-shadow: inset 1px 1px 1px rgba(0, 0, 0, .3);
+        }
+        &:hover {
+            cursor: pointer;
+            opacity: .8;
+        }
+    }
+    .preview__grid {
+        margin-top: 25px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 15px;
+        img {
+            width: 180px;
+            height: auto;
+        }
+        .preview__img {
+            position: relative;
+        }
+    }
+}

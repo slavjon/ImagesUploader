@@ -1,0 +1,25 @@
+{
+    "name": "ImagesUploader",
+    "version": "1.0.0",
+    "description": "Upload images on backend",
+    "main": "index.js",
+    "scripts": {
+        "dev": "parcel src/index.html",
+        "build": "parcel build src/index.html"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/slavjon/ImagesUploader.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/slavjon/ImagesUploader/issues"
+    },
+    "homepage": "https://github.com/slavjon/ImagesUploader#readme",
+    "devDependencies": {
+        "parcel-bundler": "^1.12.4",
+        "sass": "^1.32.6"
+    }
+}
