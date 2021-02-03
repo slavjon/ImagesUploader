@@ -1,4 +1,4 @@
 # ImagesUploader
  Upload images on backend
 
- run dev: npm run serve
+ For start develop run in terminal: npm run dev

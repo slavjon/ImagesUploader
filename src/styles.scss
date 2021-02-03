@@ -4,6 +4,7 @@ input[type=file] {
 
 body {
     background: #000;
+    font-size: 16px;
 }
 
 .container {
@@ -45,14 +46,63 @@ body {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        justify-content: flex-start;
         gap: 15px;
-        img {
-            width: 180px;
-            height: auto;
-        }
         .preview__img {
             position: relative;
+            display: flex;
+            width: 180px;
+            height: auto;
+            overflow: hidden;
+            img {
+                width: 100%;
+                height: auto;
+            }
+            &:hover {
+                .preview__remove {
+                    opacity: 1;
+                }
+                .preview__panel {
+                    bottom: 0;
+                }
+            }
+            &.removing-animation {
+                transform: scale(0);
+                transition: transform .2s;
+            }
+            .preview__remove {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 20px;
+                height: 20px;
+                border: 1px solid black;
+                font-size: 18px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                font-weight: 700;
+                background: #fff;
+                color: #000;
+                opacity: 0;
+                transition: opacity .25s ease-in-out;
+            }
+            .preview__panel {
+                padding: 2px;
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: -100px;
+                display: block;
+                background: rgba(255, 255, 255, 0.8);
+                transition: bottom .25s ease-out;
+                .name {
+                    font-size: 14px;
+                }
+                .size {
+                    font-weight: bold;
+                }
+            }
         }
     }
 }

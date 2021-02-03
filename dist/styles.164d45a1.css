@@ -4,6 +4,7 @@ input[type=file] {
 
 body {
   background: #000;
+  font-size: 16px;
 }
 
 .container {
@@ -44,15 +45,62 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-start;
   gap: 15px;
-}
-.main__wrap .preview__grid img {
-  width: 180px;
-  height: auto;
 }
 .main__wrap .preview__grid .preview__img {
   position: relative;
+  display: flex;
+  width: 180px;
+  height: auto;
+  overflow: hidden;
+}
+.main__wrap .preview__grid .preview__img img {
+  width: 100%;
+  height: auto;
+}
+.main__wrap .preview__grid .preview__img:hover .preview__remove {
+  opacity: 1;
+}
+.main__wrap .preview__grid .preview__img:hover .preview__panel {
+  bottom: 0;
+}
+.main__wrap .preview__grid .preview__img.removing-animation {
+  transform: scale(0);
+  transition: transform 0.2s;
+}
+.main__wrap .preview__grid .preview__img .preview__remove {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: 700;
+  background: #fff;
+  color: #000;
+  opacity: 0;
+  transition: opacity 0.25s ease-in-out;
+}
+.main__wrap .preview__grid .preview__img .preview__panel {
+  padding: 2px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -100px;
+  display: block;
+  background: rgba(255, 255, 255, 0.8);
+  transition: bottom 0.25s ease-out;
+}
+.main__wrap .preview__grid .preview__img .preview__panel .name {
+  font-size: 14px;
+}
+.main__wrap .preview__grid .preview__img .preview__panel .size {
+  font-weight: bold;
 }
 
 /*# sourceMappingURL=/styles.164d45a1.css.map */

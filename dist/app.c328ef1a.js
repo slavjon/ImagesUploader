@@ -125,14 +125,55 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.upload = upload;
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//transform bites to KB function
+function formatBytes(a) {
+  var b = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+  if (0 === a) return "0 Bytes";
+  var c = 0 > b ? 0 : b,
+      d = Math.floor(Math.log(a) / Math.log(1024));
+  return parseFloat((a / Math.pow(1024, d)).toFixed(c)) + " " + ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"][d];
+} // helper function for create new html elements
+
+
+var element = function element(tag) {
+  var classes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var content = arguments.length > 2 ? arguments[2] : undefined;
+  var node = document.createElement(tag);
+
+  if (classes.length) {
+    var _node$classList;
+
+    (_node$classList = node.classList).add.apply(_node$classList, _toConsumableArray(classes));
+  }
+
+  if (content) {
+    node.textContent = content;
+  }
+
+  return node;
+};
+
 function upload(selector) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var previewGrid = document.createElement('div');
-  previewGrid.classList.add('preview__grid');
+  var files = []; //all added files array
+
+  var previewGrid = element('div', ['preview__grid']);
   var input = document.querySelector(selector);
-  var open = document.createElement('button');
-  open.classList.add('btn');
-  open.textContent = 'Open images'; //Text in button
+  var open = element('button', ['btn'], 'Open images');
+  var upload = element('button', ['btn', 'primary'], 'Download');
+  upload.style.display = 'none';
 
   if (options.multi) {
     input.setAttribute('multiple', true);
@@ -143,6 +184,7 @@ function upload(selector) {
   }
 
   input.insertAdjacentElement('afterend', previewGrid);
+  input.insertAdjacentElement('afterend', upload);
   input.insertAdjacentElement('afterend', open);
 
   var triggerInput = function triggerInput() {
@@ -154,8 +196,9 @@ function upload(selector) {
       return;
     }
 
-    var files = Array.from(event.target.files);
+    files = Array.from(event.target.files);
     previewGrid.innerHTML = '';
+    upload.style.display = 'inline-block';
     files.forEach(function (file) {
       if (!file.type.match('image')) {
         return;
@@ -165,15 +208,37 @@ function upload(selector) {
 
       reader.onload = function (ev) {
         var src = ev.target.result;
-        previewGrid.insertAdjacentHTML('afterbegin', "<div class=\"preview__img\">\n                        <img src=\"".concat(src, "\" alt=\"").concat(file.name, "\">\n                    </div>\n                    "));
+        previewGrid.insertAdjacentHTML('afterbegin', "<div class=\"preview__img\">\n                        <div class=\"preview__remove\" data-name=\"".concat(file.name, "\">&times;</div>\n                        <img src=\"").concat(src, "\" alt=\"").concat(file.name, "\">\n                        <div class=\"preview__panel\">\n                            <div class=\"name\">").concat(file.name, "</div>\n                            <div class=\"size\">Size: ").concat(formatBytes(file.size, 0), "</div>\n                        </div>\n                    </div>\n                    "));
       };
 
       reader.readAsDataURL(file);
     });
   };
 
+  var removeImgHandler = function removeImgHandler(event) {
+    if (!event.target.dataset.name) {
+      return;
+    }
+
+    var name = event.target.dataset.name;
+    files = files.filter(function (file) {
+      return file.name !== name;
+    });
+
+    if (!files.length) {
+      upload.style.display = 'none';
+    }
+
+    var removeBlock = previewGrid.querySelector("[data-name=\"".concat(name, "\"]")).closest('.preview__img');
+    removeBlock.classList.add('removing-animation');
+    setTimeout(function () {
+      return removeBlock.remove();
+    }, 200);
+  };
+
   open.addEventListener('click', triggerInput);
   input.addEventListener('change', changeHundler);
+  previewGrid.addEventListener('click', removeImgHandler);
 }
 },{}],"app.js":[function(require,module,exports) {
 "use strict";
@@ -214,7 +279,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "3164" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "15785" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
