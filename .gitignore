@@ -1,2 +1,4 @@
 node_modules
 .cache
+dist
+dist/app.c328ef1a.js
