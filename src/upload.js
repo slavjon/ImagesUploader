@@ -20,9 +20,14 @@ const element = (tag, classes = [], content) => {
     return node;
 }
 
+// for remove some errors
+function noop() {};
+
 export function upload(selector, options = {}) {
 
     let files = []; //all added files array
+
+    const onUpload = options.onUpload ?? noop;
     const previewGrid = element('div', ['preview__grid']);
     const input = document.querySelector(selector);
     const open = element('button', ['btn'], 'Open images');
@@ -89,11 +94,25 @@ export function upload(selector, options = {}) {
 
         const removeBlock = previewGrid
             .querySelector(`[data-name="${name}"]`).closest('.preview__img');
-        removeBlock.classList.add('removing-animation');
+            removeBlock.classList.add('removing-animation');
         setTimeout(() => removeBlock.remove(), 200);
+    }
+
+    const clearPreviewPanel = el => {
+        el.style.bottom = '0';
+        el.innerHTML = `<div class="preview__info-progress"></div>`;
+    }
+
+    const uploadHandler = () => {
+        previewGrid.querySelectorAll('.preview__remove').forEach(e => e.remove());
+        const previewInfo = previewGrid.querySelectorAll('.preview__panel');
+        previewInfo.forEach(clearPreviewPanel);
+        onUpload(files, previewInfo);
     }
 
     open.addEventListener('click', triggerInput);
     input.addEventListener('change', changeHundler);
     previewGrid.addEventListener('click', removeImgHandler);
+    upload.addEventListener('click', uploadHandler);
+
 }

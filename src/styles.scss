@@ -88,7 +88,6 @@ body {
                 transition: opacity .25s ease-in-out;
             }
             .preview__panel {
-                padding: 2px;
                 position: absolute;
                 left: 0;
                 right: 0;
@@ -97,10 +96,25 @@ body {
                 background: rgba(255, 255, 255, 0.8);
                 transition: bottom .25s ease-out;
                 .name {
+                    padding: 2px;
                     font-size: 14px;
                 }
                 .size {
+                    padding: 2px;
                     font-weight: bold;
+                }
+                .preview__info-progress {
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    height: 20px;
+                    font-size: 12px;
+                    line-height: 20px;
+                    font-weight: bold;
+                    background: rgb(41, 160, 67);
+                    text-align: center;
+                    transition: width .22s;
                 }
             }
         }
